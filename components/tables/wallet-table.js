@@ -33,7 +33,7 @@ import {
 
 import { Select as ReactSelect } from "chakra-react-select";
 import React, { useEffect, useMemo, useState } from "react";
-import { useFilters, usePagination, useSortBy, useTable, useBlockLayout} from "react-table";
+import { useFilters, usePagination, useSortBy, useTable, useFlexLayout} from "react-table";
 
 const customFilterFunction = (rows, id, filterValue) => {
   const filteredValues = [...new Set(filterValue.map((f) => f.value))];
@@ -64,23 +64,19 @@ const columnsData = [
   {
     Header: "ADDRESS",
     accessor: "address",
-    width: 150,
   },
   {
     Header: "LEGOS",
     accessor: "tags",
     filter: customFilterFunction,
-    width: 300,
   },
   {
     Header: "RISK SCORE",
     accessor: "score",
-    width: 150,
   },
   {
     Header: "AMOUNT",
     accessor: "amount",
-    width: 150,
     sortType: compareNumericString
   },
 ];
@@ -101,7 +97,7 @@ export default function WalletTable(props) {
     useFilters,
     useSortBy,
     usePagination,
-    useBlockLayout
+    useFlexLayout
   );
 
   const {
@@ -202,7 +198,7 @@ export default function WalletTable(props) {
                   if (cell.column.Header === "ADDRESS") {
                     
                     data = (
-                      <Link color={textColor} fontSize="xs" fontWeight="700"  href={`https://etherscan.io/address/${cell.value}`} target="_blank" textDecorationLine={"underline"} textColor="blue.600"> 
+                      <Link color={textColor} fontSize="sm" fontWeight="700"  href={`/wallets/${cell.value}`} target="_blank" textDecorationLine={"underline"} textColor="blue.600"> 
                         {cell.value.slice(0,6) + ".." + cell.value.slice(-3)}
                       </Link>
                     );
@@ -217,9 +213,8 @@ export default function WalletTable(props) {
                               px={2}
                               py={1}
                               mr={1}
-                              bg={useColorModeValue("gray.50", "gray.800")}
+                              bg={useColorModeValue(item.includes("✅") ? item.includes("OnChain") ? "green.50" : "red.50" : item.includes("OnChain") ? "red.50": "green.50","gray.500")}
                               fontWeight={"100"}
-                              fontSize={"10px"}
                             >
                               {item}
                             </Badge>
@@ -237,7 +232,7 @@ export default function WalletTable(props) {
                           backgroundColor={"green.200"}
                           h="8px"
                           w="63px"
-                          value={cell.value * 10}
+                          value={cell.value}
                         />
                       </Flex>
                     );

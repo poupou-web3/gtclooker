@@ -17,6 +17,7 @@ import {
   List
 } from "@chakra-ui/react";
 
+import Banner from "../cards/banner";
 
 import { useRouter } from 'next/router';
 
@@ -24,6 +25,10 @@ const LinkItems = [
   {
     name: "Projects",
     to : "/projects"
+  },
+  {
+    name: "Wallets",
+    to : "/wallets"
   }
 ];
 
@@ -50,6 +55,7 @@ export default function SimpleSidebar({ children }) {
       </Drawer>
       {/* mobilenav */}
       <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
+      <Banner />
       <Box ml={{ base: 0, md: 60 }} pt='50px'>
         {children}
       </Box>
@@ -119,7 +125,7 @@ const NavItem = ({ icon, to, items, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "blue.400",
           color: "white",
         }}
         {...rest}

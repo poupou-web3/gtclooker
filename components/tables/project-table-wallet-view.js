@@ -42,20 +42,9 @@ import {
   usePagination,
   useSortBy,
   useTable,
-  useBlockLayout,
   useFlexLayout
 } from "react-table";
 
-
-const customTagFilterFunction = (rows, id, filterValue) => {
-  const filteredValues = [...new Set(filterValue.map((f) => f.value))];
-  //return rows.filter((row) => filteredValues.includes(row.original.tags) || filteredValues.length==0)
-  return rows.filter(
-    (row) =>
-      filteredValues.filter((x) => row.original.tags.includes(x)).length ==
-        filteredValues.length || filteredValues.length == 0
-  );
-};
 
 const customTitleFilterFunction = (rows, id, filterValue) => {
   const filteredValues = [...new Set(filterValue.map((f) => f.value))];
@@ -66,14 +55,14 @@ const customTitleFilterFunction = (rows, id, filterValue) => {
 
 const columnsData = [
   {
-    Header: "TITLE",
+    Header: "PROJECT",
     accessor: "title",
     Cell: ({ row }) => (
       <Link
         color={useColorModeValue("secondaryGray.900", "white")}
         fontSize="sm"
         fontWeight="700"
-        href={`/projects/${row.original.projectID}`}
+        href={`/projects/${row.original.id}`}
         textDecorationLine={"underline"}
         textColor="blue.600"
       >
@@ -83,24 +72,10 @@ const columnsData = [
     filter: customTitleFilterFunction,
   },
   {
-    Header: "LEGOS",
-    accessor: "tags",
-    filter: customTagFilterFunction,
-    minWidth:225
-  },
-  {
-    Header: "RISK SCORE",
-    accessor: "riskScore",
-  },
-  {
     Header: "AMOUNT",
     accessor: "amount",
     sortType: compareNumericString
   },
-  {
-    Header: "CONTRIBUTORS",
-    accessor: "contributors",
-  }
 ];
 
 
@@ -118,7 +93,7 @@ function compareNumericString(rowA, rowB, id, desc) {
   return 0;
 }
 
-export default function ProjectTable(props) {
+export default function ProjectTableInWalletPage(props) {
   const { tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -155,7 +130,6 @@ export default function ProjectTable(props) {
   } = tableInstance;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
-  const iconColor = useColorModeValue("secondaryGray.500", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
   const [isMounted, setIsMounted] = useState(false);
@@ -181,7 +155,13 @@ export default function ProjectTable(props) {
         px="0px"
         overflowX={{ sm: "scroll", lg: "scroll" }}
       >
-        <VStack px="25px" justify="space-between" mb="20px" align={"left"}>
+        <Flex px="25px" justify="space-between" mb="20px">
+        <Text
+          color={textColor}
+          fontSize="5px"
+          lineHeight="100%"
+          width={"500px"}
+        >
          
              <ReactSelect
               isMulti
@@ -200,25 +180,10 @@ export default function ProjectTable(props) {
               size="sm"
               
             />
+            </Text>
+            
+    </Flex>
 
-            <ReactSelect
-              isMulti
-              onChange={(e) => {
-                setFilter("tags", e);
-              }}
-              name="colors"
-              classNamePrefix="chakra-react-select"
-              options={[...new Set(data.map((d) => d.tags).flat())].map(
-                (o, i) => {
-                  return { id: i, value: o, label: o };
-                }
-              )}
-              placeholder="Select Project Legos..."
-              closeMenuOnSelect={false}
-              size="sm"
-            />
-          
-        </VStack>
         <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
           <Thead>
             {headerGroups.map((headerGroup, index) => (
@@ -250,7 +215,7 @@ export default function ProjectTable(props) {
                 <Tr {...row.getRowProps()} key={index}>
                   {row.cells.map((cell, index) => {
                     let data;
-                    if (cell.column.Header === "TITLE") {
+                    if (cell.column.Header === "PROJECT") {
                       return (
                         <Td
                           {...cell.getCellProps()}
@@ -261,39 +226,6 @@ export default function ProjectTable(props) {
                         >
                           {cell.render("Cell")}
                         </Td>
-                      );
-                    } else if (cell.column.Header === "LEGOS") {
-                      data = (
-                        <Wrap align="center">
-                          {cell.value.map((item, key) => {
-                            return (
-                              <WrapItem>
-                                <Badge
-                                  px={2}
-                                  py={1}
-                                  mr={1}
-                                  bg={useColorModeValue(item.includes("✅") ? item.includes("OnChain") ? "green.50" : "red.50" : item.includes("OnChain") ? "red.50": "green.50","gray.500")}
-                                  fontWeight={"400"}
-                                >
-                                  {item}
-                                </Badge>
-                              </WrapItem>
-                            );
-                          })}
-                        </Wrap>
-                      );
-                    } else if (cell.column.Header === "RISK SCORE") {
-                      data = (
-                        <Flex align="center">
-                          <Progress
-                            variant="table"
-                            colorScheme={"red"}
-                            backgroundColor={"green.200"}
-                            h="8px"
-                            w="63px"
-                            value={cell.value}
-                          />
-                        </Flex>
                       );
                     }
                     else {
