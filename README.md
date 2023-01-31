@@ -8,8 +8,8 @@ Gitcoin Sybil Dashboard
 2. Setup enviroment variable
 
 ```
-SUPABASE_URL
-SUPABASE_KEY
+SUPABASE_PROJECT=
+SUPABASE_KEY=
 ```
 
 3. Start the project
