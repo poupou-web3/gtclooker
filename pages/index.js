@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <Fragment>
       <Head>
-        <title>GtcLooker</title>
+        <title>GrantLooker</title>
         <meta
           name="description"
           content="Sybil Detection Dashboard"
