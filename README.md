@@ -18,4 +18,3 @@ SUPABASE_KEY=
 npm run dev
 ```
 
-This project is currently deployed at [coming soon]()
