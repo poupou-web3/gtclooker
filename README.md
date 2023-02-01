@@ -17,4 +17,6 @@ SUPABASE_KEY=
 ```
 npm run dev
 ```
+# How it works
 
+![ui_lego](/public/ui_lego.png)
