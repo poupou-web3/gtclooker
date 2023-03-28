@@ -26,7 +26,13 @@ event - compiled client and server successfully in 248 ms (1285 modules)
 error - lib\project-utils.js (18:5) @ getProjectOverviewData
 TypeError: Cannot read properties of null (reading 'map')
 ```
-It means that the project was not found in the database. You need to run the script to populate the database.
+It means that the project was not found in the database. You need to run the script to create the database.
+
+```
+event - compiled client and server successfully in 541 ms (1285 modules)
+error - TypeError: Reduce of empty array with no initial value
+```
+It means that the data base is empty 
 
 
 

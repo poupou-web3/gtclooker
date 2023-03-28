@@ -18,8 +18,8 @@ then install dependencies
 Create a new project at [https://app.supabase.com/](https://app.supabase.com/)
 
 ```
-SUPABASE_PROJECT=Supabase project url
-SUPABASE_KEY=JWT Secret
+SUPABASE_PROJECT=Supabase project url https://xyzcompany.supabase.co
+SUPABASE_KEY=public-anon-key
 ```
 
 You can put these variables in a .env.local file at the root of the project.
